@@ -1,3 +1,4 @@
+
 package Adventure_Game.data_access;
 
 import Adventure_Game.entity.AdventureGame;
@@ -5,18 +6,42 @@ import Adventure_Game.entity.GameMap;
 import Adventure_Game.entity.Location;
 import Adventure_Game.use_case.move.MoveGameDataAccessInterface;
 import Battle_System.User.User;
+import data_access.FileDataAccess;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
 public class InMemoryUserDataAccessObject implements MoveGameDataAccessInterface {
 
     private AdventureGame game;
+    private final FileDataAccess fileDataAccess;
+    private static final String FILE_PATH = "userdata.json";
 
     public InMemoryUserDataAccessObject() {
-        User user = new User();
+        this.fileDataAccess = new FileDataAccess();
 
-        // TODO: read from json file
+        // Check if userdata.json exists and is not empty
+        File file = new File(FILE_PATH);
+        if (file.exists() && file.length() > 0) {
+            // Load existing game
+            this.game = fileDataAccess.load(AdventureGame.class);
+            if (this.game != null) {
+                // System.out.println("Game loaded from userdata.json");
+                // System.out.println("Current location: " + game.getGameMap().getCurrentLocation().getName());
+            } else {
+                // File exists but couldn't be parsed, start new game
+                startNewGame();
+            }
+        } else {
+            // File doesn't exist or is empty, start new game
+            startNewGame();
+        }
+    }
+
+    private void startNewGame() {
+        User user = new User();
+        // System.out.println("Starting new game...");
         Location loc0 = new Location("Forest", 43.6532, -79.3832, null);
         Location loc1 = new Location("Cave", 43.6540, -79.3840, null);
         Location loc2 = new Location("Mountain", 43.6550, -79.3850, null);
@@ -35,5 +60,6 @@ public class InMemoryUserDataAccessObject implements MoveGameDataAccessInterface
     @Override
     public void saveGame(AdventureGame game) {
         this.game = game;
+        fileDataAccess.save(game);
     }
 }
