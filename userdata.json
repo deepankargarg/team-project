@@ -23,7 +23,7 @@
         "longitude": -79.385
       }
     ],
-    "currentLocationIndex": 1
+    "currentLocationIndex": 0
   },
   "pathHistory": [
     {
@@ -35,6 +35,21 @@
       "name": "Cave",
       "latitude": 43.654,
       "longitude": -79.384
+    },
+    {
+      "name": "Mountain",
+      "latitude": 43.655,
+      "longitude": -79.385
+    },
+    {
+      "name": "Cave",
+      "latitude": 43.654,
+      "longitude": -79.384
+    },
+    {
+      "name": "Forest",
+      "latitude": 43.6532,
+      "longitude": -79.3832
     }
   ]
 }
