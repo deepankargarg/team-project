@@ -1,9 +1,6 @@
 package Battle_System.Entity;
 
-import Battle_System.GameAPI.SrdMonsterDetail;
-import Battle_System.Entity.Inventory;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class User {
