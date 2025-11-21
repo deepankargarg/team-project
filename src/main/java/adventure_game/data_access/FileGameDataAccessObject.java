@@ -4,6 +4,7 @@ import adventure_game.entity.AdventureGame;
 import adventure_game.entity.GameMap;
 import adventure_game.entity.Location;
 import adventure_game.use_case.move.MoveGameDataAccessInterface;
+import adventure_game.use_case.show_results.ShowResultsGameDataAccessInterface;
 import Battle_System.User.User;
 import data_access.FileDataAccess;
 
@@ -11,7 +12,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-public class FileGameDataAccessObject implements MoveGameDataAccessInterface {
+public class FileGameDataAccessObject implements MoveGameDataAccessInterface, ShowResultsGameDataAccessInterface {
 
     private AdventureGame game;
     private final FileDataAccess fileDataAccess;
@@ -47,6 +48,11 @@ public class FileGameDataAccessObject implements MoveGameDataAccessInterface {
 
     @Override
     public AdventureGame getGame() {
+        return this.game;
+    }
+
+    @Override
+    public AdventureGame get() {
         return this.game;
     }
 

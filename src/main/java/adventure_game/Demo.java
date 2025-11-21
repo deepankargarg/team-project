@@ -9,29 +9,41 @@ import adventure_game.interface_adapter.move.MoveController;
 import adventure_game.interface_adapter.move.MovePresenter;
 import adventure_game.interface_adapter.move.MoveStaticMapDataAccessInterface;
 import adventure_game.interface_adapter.move.MoveViewModel;
+import adventure_game.interface_adapter.results.ResultsViewModel;
+import adventure_game.interface_adapter.results.ShowResultsController;
+import adventure_game.interface_adapter.results.ShowResultsPresenter;
 import adventure_game.use_case.move.MoveGameDataAccessInterface;
 import adventure_game.use_case.move.MoveInputBoundary;
 import adventure_game.use_case.move.MoveInteractor;
 import adventure_game.use_case.move.MoveOutputData;
+import adventure_game.use_case.show_results.ShowResultsInputBoundary;
+import adventure_game.use_case.show_results.ShowResultsInteractor;
 import adventure_game.view.MoveView;
+import adventure_game.view.ResultsView;
 import Battle_System.User.Monster;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Demo {
     public static void main(String[] args) {
         JFrame application = new JFrame("My Clean Architecture Adventure Game");
         application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        // Create CardLayout for view switching
+        CardLayout cardLayout = new CardLayout();
+        JPanel views = new JPanel(cardLayout);
 
-        MoveGameDataAccessInterface moveGameDataAccess = new FileGameDataAccessObject();
+        // Data Access
+        FileGameDataAccessObject gameDataAccess = new FileGameDataAccessObject();
         MoveStaticMapDataAccessInterface mapService = new StaticMapDataAccessObject();
 
+        // Move components
         MoveViewModel moveViewModel = new MoveViewModel();
         MovePresenter movePresenter = new MovePresenter(moveViewModel, mapService);
 
         MoveInputBoundary moveInteractor = new MoveInteractor(
-                moveGameDataAccess,
+                gameDataAccess,
                 movePresenter
         );
 
@@ -44,9 +56,37 @@ public class Demo {
                 moveController
         );
 
+        // Results components
+        ResultsViewModel resultsViewModel = new ResultsViewModel();
+        ShowResultsPresenter resultsPresenter = new ShowResultsPresenter(resultsViewModel);
+
+        ShowResultsInputBoundary resultsInteractor = new ShowResultsInteractor(
+                gameDataAccess,
+                resultsPresenter
+        );
+
+        ShowResultsController resultsController = new ShowResultsController(resultsInteractor);
+
+        ResultsView resultsView = new ResultsView(resultsViewModel);
+
+
+        // Add views to CardLayout
+        views.add(moveView, moveView.getViewName());
+        views.add(resultsView, resultsView.getViewName());
+
+        // Wire up End Game button to switch to results
+        moveView.getEndGameButton().addActionListener(e -> {
+            resultsController.execute();
+            cardLayout.show(views, resultsView.getViewName());
+        });
+
+        // Wire up Back button to return to game
+        resultsView.getBackButton().addActionListener(e -> {
+            cardLayout.show(views, moveView.getViewName());
+        });
 
         try {
-            AdventureGame initialGame = moveGameDataAccess.getGame();
+            AdventureGame initialGame = gameDataAccess.getGame();
 
             boolean canMoveLeft = initialGame.canMove(Direction.LEFT);
             boolean canMoveRight = initialGame.canMove(Direction.RIGHT);
@@ -79,8 +119,7 @@ public class Demo {
             e.printStackTrace();
         }
 
-
-        application.add(moveView);
+        application.add(views);
         application.pack();
         application.setLocationRelativeTo(null);
         application.setVisible(true);

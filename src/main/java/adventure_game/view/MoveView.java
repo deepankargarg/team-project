@@ -20,6 +20,7 @@ public class MoveView extends JPanel implements PropertyChangeListener {
     private final JLabel currentLocationLabel;
     private final JButton goLeftButton;
     private final JButton goRightButton;
+    private final JButton endGameButton;
 
     public MoveView(MoveViewModel moveViewModel, MoveController moveController) {
         this.moveViewModel = moveViewModel;
@@ -44,8 +45,11 @@ public class MoveView extends JPanel implements PropertyChangeListener {
         JPanel buttonPanel = new JPanel();
         goLeftButton = new JButton(MoveViewModel.LEFT_BUTTON_LABEL);
         goRightButton = new JButton(MoveViewModel.RIGHT_BUTTON_LABEL);
+        endGameButton = new JButton("End Game");
+        endGameButton.setVisible(false); // Initially hidden
         buttonPanel.add(goLeftButton);
         buttonPanel.add(goRightButton);
+        buttonPanel.add(endGameButton);
         buttonPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -77,6 +81,9 @@ public class MoveView extends JPanel implements PropertyChangeListener {
             goLeftButton.setEnabled(state.isLeftButtonEnabled());
             goRightButton.setEnabled(state.isRightButtonEnabled());
 
+            // Show End Game button only when at the last location
+            endGameButton.setVisible(!state.isRightButtonEnabled());
+
             // TODO
 //            if (state.getMonster() != null) {
 //
@@ -84,5 +91,13 @@ public class MoveView extends JPanel implements PropertyChangeListener {
 //
 //            }
         }
+    }
+
+    public String getViewName() {
+        return viewName;
+    }
+
+    public JButton getEndGameButton() {
+        return endGameButton;
     }
 }
