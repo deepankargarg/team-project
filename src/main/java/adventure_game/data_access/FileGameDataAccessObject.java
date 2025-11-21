@@ -5,21 +5,32 @@ import adventure_game.entity.GameMap;
 import adventure_game.entity.Location;
 import adventure_game.use_case.move.MoveGameDataAccessInterface;
 import Battle_System.User.User;
+import data_access.FileDataAccess;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * In-memory implementation of MoveGameDataAccessInterface.
- * Data is stored in memory only and will be lost when the application closes.
- * Useful for testing and development.
- */
-public class InMemoryUserDataAccessObject implements MoveGameDataAccessInterface {
+public class FileGameDataAccessObject implements MoveGameDataAccessInterface {
 
     private AdventureGame game;
+    private final FileDataAccess fileDataAccess;
+    private static final String FILE_PATH = "userdata.json";
 
-    public InMemoryUserDataAccessObject() {
-        startNewGame();
+    public FileGameDataAccessObject() {
+        this.fileDataAccess = new FileDataAccess();
+
+        // Check if userdata.json exists and is not empty
+        File file = new File(FILE_PATH);
+        if (file.exists() && file.length() > 0) {
+            // Attempt to load existing game
+            this.game = fileDataAccess.load(AdventureGame.class);
+        }
+
+        // If game is still null (file empty, doesn't exist, or couldn't be parsed), start new game
+        if (this.game == null) {
+            startNewGame();
+        }
     }
 
     private void startNewGame() {
@@ -41,7 +52,7 @@ public class InMemoryUserDataAccessObject implements MoveGameDataAccessInterface
 
     @Override
     public void saveGame(AdventureGame game) {
-        // Only update in-memory state, no persistence
         this.game = game;
+        fileDataAccess.save(game);
     }
 }

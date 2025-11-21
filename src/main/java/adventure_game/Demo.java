@@ -1,6 +1,6 @@
 package adventure_game;
 
-import adventure_game.data_access.InMemoryUserDataAccessObject;
+import adventure_game.data_access.FileGameDataAccessObject;
 import adventure_game.data_access.StaticMapDataAccessObject;
 import adventure_game.entity.AdventureGame;
 import adventure_game.entity.Direction;
@@ -24,7 +24,7 @@ public class Demo {
         application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
-        MoveGameDataAccessInterface moveGameDataAccess = new InMemoryUserDataAccessObject();
+        MoveGameDataAccessInterface moveGameDataAccess = new FileGameDataAccessObject();
         MoveStaticMapDataAccessInterface mapService = new StaticMapDataAccessObject();
 
         MoveViewModel moveViewModel = new MoveViewModel();

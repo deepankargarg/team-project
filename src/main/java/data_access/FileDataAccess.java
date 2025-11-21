@@ -5,6 +5,7 @@ import adventure_game.entity.GameMap;
 import adventure_game.entity.Location;
 import Battle_System.User.User;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -46,10 +47,10 @@ public class FileDataAccess {
             if (clazz.equals(AdventureGame.class)) {
                 return (T) deserializeAdventureGame(json);
             }
-            
+
             return null;
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException | JSONException e) {
+            // File doesn't exist, is empty, or contains invalid JSON
             return null;
         }
     }
