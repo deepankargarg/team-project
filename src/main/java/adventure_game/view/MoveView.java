@@ -10,6 +10,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class MoveView extends JPanel implements PropertyChangeListener {
+    public static final String LEFT_BUTTON_LABEL = "Go Left";
+    public static final String RIGHT_BUTTON_LABEL = "Go Right";
 
     private final String viewName;
     private final MoveViewModel moveViewModel;
@@ -42,8 +44,8 @@ public class MoveView extends JPanel implements PropertyChangeListener {
         currentLocationLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JPanel buttonPanel = new JPanel();
-        goLeftButton = new JButton(MoveViewModel.LEFT_BUTTON_LABEL);
-        goRightButton = new JButton(MoveViewModel.RIGHT_BUTTON_LABEL);
+        goLeftButton = new JButton(LEFT_BUTTON_LABEL);
+        goRightButton = new JButton(RIGHT_BUTTON_LABEL);
         buttonPanel.add(goLeftButton);
         buttonPanel.add(goRightButton);
         buttonPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
