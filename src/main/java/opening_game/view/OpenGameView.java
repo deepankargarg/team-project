@@ -1,7 +1,7 @@
 package opening_game.view;
 
-import opening_game.interface_adapter.OpenGameController;
-import opening_game.interface_adapter.OpenGameViewModel;
+import opening_game.interface_adapter.opengame.OpenGameController;
+import opening_game.interface_adapter.opengame.OpenGameViewModel;
 
 import javax.swing.*;
 import java.awt.*;

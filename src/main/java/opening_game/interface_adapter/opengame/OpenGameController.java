@@ -1,7 +1,7 @@
-package opening_game.interface_adapter;
+package opening_game.interface_adapter.opengame;
 
-import opening_game.use_case.OpenGameInputBoundary;
-import opening_game.use_case.OpenGameInputData;
+import opening_game.use_case.openGame.OpenGameInputBoundary;
+import opening_game.use_case.openGame.OpenGameInputData;
 
 public class OpenGameController {
     private final OpenGameInputBoundary interactor;

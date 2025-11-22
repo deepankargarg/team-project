@@ -1,9 +1,13 @@
 package opening_game;
 
 import opening_game.data_access.OpenGameFileDataAccess;
-import opening_game.entity.GameState;
-import opening_game.interface_adapter.*;
-import opening_game.use_case.*;
+import opening_game.interface_adapter.opengame.OpenGameController;
+import opening_game.interface_adapter.opengame.OpenGamePresenter;
+import opening_game.interface_adapter.opengame.OpenGameViewModel;
+import opening_game.use_case.openGame.OpenGameDataAccessInterface;
+import opening_game.use_case.openGame.OpenGameInputBoundary;
+import opening_game.use_case.openGame.OpenGameInteractor;
+import opening_game.use_case.openGame.ScreenSwitchBoundary;
 import opening_game.view.OpenGameView;
 
 import javax.swing.*;
@@ -22,19 +26,25 @@ public class Main {
         OpenGameDataAccessInterface dataAccess =
                 new OpenGameFileDataAccess("savegame.json");
 
-        // 4. Interactor
+        // 4. Screen Switcher (TEMP version)
+        ScreenSwitchBoundary switcher = new ScreenSwitchBoundary() {
+            @Override
+            public void switchToResultScreen() {
+                System.out.println("Switching to Result Screen...");
+            }
+        };
+
+        // 5. Interactor
         OpenGameInputBoundary interactor =
-                new OpenGameInteractor(presenter, dataAccess);
+                new OpenGameInteractor(presenter, dataAccess, switcher);
 
-        // 5. Controller
-        OpenGameController controller =
-                new OpenGameController(interactor);
+        // 6. Controller
+        OpenGameController controller = new OpenGameController(interactor);
 
-        // 6. View (Swing panel)
-        OpenGameView view =
-                new OpenGameView(controller, viewModel);
+        // 7. View
+        OpenGameView view = new OpenGameView(controller, viewModel);
 
-        // 7. Show it inside a JFrame
+        // 8. Bring up JFrame
         JFrame frame = new JFrame("Open Game");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setContentPane(view);

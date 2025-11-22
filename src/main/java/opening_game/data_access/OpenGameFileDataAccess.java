@@ -2,7 +2,7 @@ package opening_game.data_access;
 
 import com.google.gson.Gson;
 import opening_game.entity.GameState;
-import opening_game.use_case.OpenGameDataAccessInterface;
+import opening_game.use_case.openGame.OpenGameDataAccessInterface;
 
 import java.io.File;
 import java.io.FileReader;

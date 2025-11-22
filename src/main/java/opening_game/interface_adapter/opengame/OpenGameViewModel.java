@@ -1,4 +1,4 @@
-package opening_game.interface_adapter;
+package opening_game.interface_adapter.opengame;
 import opening_game.entity.GameState;
 
 import java.util.ArrayList;

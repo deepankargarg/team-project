@@ -1,7 +1,7 @@
-package opening_game.interface_adapter;
+package opening_game.interface_adapter.opengame;
 
-import opening_game.use_case.OpenGameOutputBoundary;
-import opening_game.use_case.OpenGameOutputData;
+import opening_game.use_case.openGame.OpenGameOutputBoundary;
+import opening_game.use_case.openGame.OpenGameOutputData;
 
 public class OpenGamePresenter implements OpenGameOutputBoundary {
 

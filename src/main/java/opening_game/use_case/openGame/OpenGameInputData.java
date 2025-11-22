@@ -1,4 +1,4 @@
-package opening_game.use_case;
+package opening_game.use_case.openGame;
 //Is the user trying to start a new game or continue an existing one?
 public class OpenGameInputData {
     private final boolean newGame;        // true = new game, false = continue

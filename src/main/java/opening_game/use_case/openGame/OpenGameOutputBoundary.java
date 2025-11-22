@@ -1,4 +1,4 @@
-package opening_game.use_case;
+package opening_game.use_case.openGame;
 
 public interface OpenGameOutputBoundary {
     void prepareSuccessView(OpenGameOutputData outputData);
