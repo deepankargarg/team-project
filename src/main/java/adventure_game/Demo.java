@@ -1,13 +1,14 @@
 package adventure_game;
 
 import adventure_game.data_access.FileGameDataAccessObject;
-import adventure_game.data_access.StaticMapDataAccessObject;
+import adventure_game.data_access.InMemoryUserDataAccessObject;
+import adventure_game.game_api.GeoapifyStaticMap;
 import adventure_game.entity.AdventureGame;
 import adventure_game.entity.Direction;
 import adventure_game.entity.Location;
 import adventure_game.interface_adapter.move.MoveController;
 import adventure_game.interface_adapter.move.MovePresenter;
-import adventure_game.interface_adapter.move.MoveStaticMapDataAccessInterface;
+import adventure_game.game_api.MoveStaticMapInterface;
 import adventure_game.interface_adapter.move.MoveViewModel;
 import adventure_game.interface_adapter.results.ResultsViewModel;
 import adventure_game.interface_adapter.results.ShowResultsController;
@@ -36,7 +37,7 @@ public class Demo {
 
         // Data Access
         FileGameDataAccessObject gameDataAccess = new FileGameDataAccessObject();
-        MoveStaticMapDataAccessInterface mapService = new StaticMapDataAccessObject();
+        MoveStaticMapInterface mapService = new GeoapifyStaticMap();
 
         // Move components
         MoveViewModel moveViewModel = new MoveViewModel();

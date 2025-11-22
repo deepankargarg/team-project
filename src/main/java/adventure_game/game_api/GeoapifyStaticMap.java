@@ -1,12 +1,11 @@
-package adventure_game.data_access;
+package adventure_game.game_api;
 
-import adventure_game.interface_adapter.move.MoveStaticMapDataAccessInterface;
 import javax.swing.*;
 import java.awt.*;
 
-public class StaticMapDataAccessObject implements MoveStaticMapDataAccessInterface {
+public class GeoapifyStaticMap implements MoveStaticMapInterface {
     public ImageIcon getMapImage(double latitude, double longitude) {
-        // TODO: replace with a true static map image using api
+        // TODO: replace with a true static map image using geoapify's api
         return createPlaceholderImage(latitude, longitude);
     }
 

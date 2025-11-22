@@ -1,5 +1,6 @@
 package adventure_game.interface_adapter.move;
 
+import adventure_game.game_api.MoveStaticMapInterface;
 import adventure_game.use_case.move.MoveOutputBoundary;
 import adventure_game.use_case.move.MoveOutputData;
 
@@ -8,9 +9,9 @@ import javax.swing.*;
 public class MovePresenter implements MoveOutputBoundary {
 
     private final MoveViewModel moveViewModel;
-    private final MoveStaticMapDataAccessInterface staticMapService;
+    private final MoveStaticMapInterface staticMapService;
 
-    public MovePresenter(MoveViewModel moveViewModel, MoveStaticMapDataAccessInterface staticMapService) {
+    public MovePresenter(MoveViewModel moveViewModel, MoveStaticMapInterface staticMapService) {
         this.moveViewModel = moveViewModel;
         this.staticMapService = staticMapService;
     }
