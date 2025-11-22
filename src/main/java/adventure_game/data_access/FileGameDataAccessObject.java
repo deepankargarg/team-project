@@ -61,4 +61,21 @@ public class FileGameDataAccessObject implements MoveGameDataAccessInterface, Sh
         this.game = game;
         fileDataAccess.save(game);
     }
+
+    @Override
+    public void clearGameData() {
+        File file = new File(FILE_PATH);
+        System.out.println("Attempting to clear game data...");
+        System.out.println("File exists: " + file.exists());
+        System.out.println("File path: " + file.getAbsolutePath());
+        if (file.exists()) {
+            boolean deleted = file.delete();
+            System.out.println("File deleted: " + deleted);
+            if (!deleted) {
+                System.err.println("Failed to delete file!");
+            }
+        }
+        // Reset to a new game in memory
+        startNewGame();
+    }
 }

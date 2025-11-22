@@ -11,4 +11,9 @@ public interface ShowResultsGameDataAccessInterface {
      * @return the adventure game
      */
     AdventureGame get();
+
+    /**
+     * Clears the saved game data, forcing a new game on next start.
+     */
+    void clearGameData();
 }

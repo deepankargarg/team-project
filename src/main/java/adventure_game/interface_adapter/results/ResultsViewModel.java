@@ -7,7 +7,7 @@ import adventure_game.interface_adapter.ViewModel;
  */
 public class ResultsViewModel extends ViewModel<ResultsState> {
     public static final String TITLE_LABEL = "Game Results";
-    public static final String BACK_BUTTON_LABEL = "Back to Game";
+    public static final String BACK_BUTTON_LABEL = "Play Again";
 
     public ResultsViewModel() {
         super("results");

@@ -34,6 +34,9 @@ public class ShowResultsInteractor implements ShowResultsInputBoundary {
                 userName, totalMoves, pathHistory, finalLocation
         );
 
+        // Clear game data to force a new game
+        gameDataAccess.clearGameData();
+
         presenter.prepareSuccessView(outputData);
     }
 }

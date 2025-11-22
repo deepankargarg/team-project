@@ -80,9 +80,11 @@ public class Demo {
             cardLayout.show(views, resultsView.getViewName());
         });
 
-        // Wire up Back button to return to game
+        // Wire up Play Again button to restart application
         resultsView.getBackButton().addActionListener(e -> {
-            cardLayout.show(views, moveView.getViewName());
+            System.out.println("Restarting game...");
+            application.dispose();
+            main(new String[]{});
         });
 
         try {
