@@ -4,7 +4,7 @@ import adventure_game.entity.AdventureGame;
 import adventure_game.entity.GameMap;
 import adventure_game.entity.Location;
 import adventure_game.use_case.move.MoveGameDataAccessInterface;
-import Battle_System.User.User;
+import Battle_System.Entity.User;
 
 import java.util.Arrays;
 import java.util.List;

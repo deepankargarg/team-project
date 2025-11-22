@@ -5,7 +5,7 @@ import adventure_game.entity.GameMap;
 import adventure_game.entity.Location;
 import adventure_game.use_case.move.MoveGameDataAccessInterface;
 import adventure_game.use_case.show_results.ShowResultsGameDataAccessInterface;
-import Battle_System.User.User;
+import Battle_System.Entity.User;
 import data_access.FileDataAccess;
 
 import java.io.File;

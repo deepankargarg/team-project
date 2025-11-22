@@ -21,7 +21,7 @@ import adventure_game.use_case.show_results.ShowResultsInputBoundary;
 import adventure_game.use_case.show_results.ShowResultsInteractor;
 import adventure_game.view.MoveView;
 import adventure_game.view.ResultsView;
-import Battle_System.User.Monster;
+import Battle_System.Entity.Monster;
 
 import javax.swing.*;
 import java.awt.*;
