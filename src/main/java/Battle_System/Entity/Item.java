@@ -1,10 +1,15 @@
 package Battle_System.Entity;
 
 public class Item {
+    /**
+     * Item class will be a class with name, description, type, value.
+     *  Item will be used by the Inventory class which is a list of items.
+     *  Items will be used by the user to add buffs, and items will be added to the inventory by the user.
+     */
 
     private String name;
     private String description;
-    private String type; // type of item from Dnd api will be sorted by interactor
+    private String type;
     private int value;
 
     public Item(String name, String type) {
@@ -15,23 +20,35 @@ public class Item {
         this.description = name + " is a " + type + " item with a potential value of " + value + " pts.";
     }
 
+    /**
+     *
+     * @return description String of basic item info
+     */
     public String getDescription() {
         return description;
     }
+
+    /**
+     *
+     * @return item type from the api types  index (is further sorted in interactor)
+     */
     public String getType() {
         return type;
     }
+
+    /**
+     *
+     * @return name of item
+     */
     public String getName() {
         return name;
     }
+
+    /**
+     *
+     * @return value items preset value that will be adjusted depending on item type
+     */
     public int getValue() {return value;}
 
 }
-
-/**
- *  List<String> lvl_1 = Arrays.asList("Common", "Varies");
- *         List<String> lvl_2 = Arrays.asList("Rare", "Uncommon");
- *         List<String> lvl_3 = Arrays.asList("Very Rare", "Legendary", "Artifact");
- *         List<String> Weapon = Arrays.asList("weapon", "wand", );
- */
 
