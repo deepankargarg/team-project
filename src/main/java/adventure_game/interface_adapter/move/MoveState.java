@@ -1,6 +1,5 @@
 package adventure_game.interface_adapter.move;
 
-
 import Battle_System.Entity.Monster;
 
 import javax.swing.*;

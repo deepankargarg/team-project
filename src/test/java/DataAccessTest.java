@@ -22,7 +22,7 @@ class DataAccessTest {
 
         if (loadedUser != null) {
             System.out.println("✓ User loaded successfully");
-            System.out.println("  - Inventory list: " + (loadedUser.getInventory() != null));
+            // System.out.println("  - Inventory list: " + (loadedUser.getInventory() != null));
         } else {
             System.out.println("✗ Failed to load user");
         }

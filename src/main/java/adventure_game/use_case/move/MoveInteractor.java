@@ -4,6 +4,7 @@ import Battle_System.Entity.Monster;
 import adventure_game.entity.AdventureGame;
 import adventure_game.entity.Direction;
 import adventure_game.entity.Location;
+import Battle_System.Entity.Monster;
 
 public class MoveInteractor implements MoveInputBoundary {
 
