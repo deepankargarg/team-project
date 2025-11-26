@@ -12,8 +12,7 @@ import java.beans.PropertyChangeListener;
 public class MoveView extends JPanel implements PropertyChangeListener {
     public static final String LEFT_BUTTON_LABEL = "Go Left";
     public static final String RIGHT_BUTTON_LABEL = "Go Right";
-
-    private final String viewName;
+    private final String viewName = "move";
     private final MoveViewModel moveViewModel;
     private final MoveController moveController;
 
@@ -23,11 +22,10 @@ public class MoveView extends JPanel implements PropertyChangeListener {
     private final JButton goLeftButton;
     private final JButton goRightButton;
     private final JButton endGameButton;
-
+    // TODO: Change the signature, only the view model is the input
     public MoveView(MoveViewModel moveViewModel, MoveController moveController) {
         this.moveViewModel = moveViewModel;
         this.moveController = moveController;
-        this.viewName = moveViewModel.getViewName();
 
         this.moveViewModel.addPropertyChangeListener(this);
 
