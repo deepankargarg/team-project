@@ -58,8 +58,8 @@ public class AppBuilder {
 
     public AppBuilder addMoveView() {
         moveViewModel = new MoveViewModel();
-        // moveView = new MoveView(moveViewModel);
-        // cardPanel.add(moveView, moveView.getViewName());
+        moveView = new MoveView(moveViewModel);
+        cardPanel.add(moveView, moveView.getViewName());
         return this;
     }
 
@@ -94,7 +94,7 @@ public class AppBuilder {
     public AppBuilder addBattleUseCase() {
         final Battle_OutputBoundary signupOutputBoundary = new Battle_Presenter(battleViewModel, viewManagerModel);
         //final Battle_InputBoundary battleInteractor = new Battle_Interactor(
-        //        userDataAccessObject, signupOutputBoundary, userFactory);
+        //        userDataAccessObject, signupOutputBoundary);
 
         //Battle_Controller controller = new Battle_Controller(battleInteractor);
         // battleView.setBattleController(controller);
