@@ -24,6 +24,7 @@ public class OpenGameView extends JPanel {
         this.controller = controller;
         this.viewModel = viewModel;
 
+        // TODO: change the add listener stuff
         // View listens to ViewModel updates
         this.viewModel.addListener(this::updateView);
 
