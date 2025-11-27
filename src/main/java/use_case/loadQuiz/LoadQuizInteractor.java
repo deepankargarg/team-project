@@ -1,5 +1,6 @@
 package use_case.loadQuiz;
 
+import entity.AnswerOption;
 import entity.Quiz;
 import use_case.quiz.QuizDataAccessInterface;
 
@@ -25,7 +26,7 @@ public class LoadQuizInteractor implements LoadQuizInputBoundary {
 
         List<String> optionTexts = quiz.getQuestion().getOptions()
                 .stream()
-                .map(opt -> opt.getText())
+                .map(AnswerOption::getText)
                 .collect(Collectors.toList());
 
         LoadQuizOutputData output = new LoadQuizOutputData(

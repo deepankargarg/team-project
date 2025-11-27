@@ -1,9 +1,7 @@
 package use_case.quiz;
 
-import entity.Monster;
 import entity.Quiz;
 import entity.QuizResult;
-import entity.User;
 
 public final class SubmitQuizInteractor implements SubmitQuizInputBoundary {
 

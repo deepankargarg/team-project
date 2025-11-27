@@ -35,14 +35,6 @@ public class Quiz_State {
         this.monster = monster;
     }
 
-    public boolean getQuizResult() {
-        return quizResult;
-    }
-
-    public void setQuizResult(boolean quizResult) {
-        this.quizResult = quizResult;
-    }
-
     public int getQuizId() {
         return quizId;
     }

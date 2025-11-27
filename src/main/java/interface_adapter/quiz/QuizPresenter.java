@@ -1,6 +1,5 @@
 package interface_adapter.quiz;
 
-import entity.Quiz;
 import interface_adapter.Battle.Battle_ViewModel;
 import interface_adapter.ViewManagerModel;
 import use_case.quiz.SubmitQuizOutputBoundary;
