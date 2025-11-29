@@ -1,8 +1,9 @@
+
 package app;
 
+import data_access.FileGameDataAccessObject;
 import data_access.InMemoryBattleDataAccess;
-import entity.Monster;
-import entity.User;
+import entity.*;
 import interface_adapter.Battle.Battle_Controller;
 import interface_adapter.Battle.Battle_Presenter;
 import interface_adapter.Battle.Battle_State;
@@ -17,6 +18,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Main application to test Battle System with view switching.
@@ -48,8 +52,31 @@ public class BattleSystemTestApp {
         Battle_ViewModel battleViewModel = new Battle_ViewModel();
         Quiz_ViewModel quizViewModel = new Quiz_ViewModel();
 
-        // Initialize Data Access
+        // Initialize Data Access with proper game data
+        FileGameDataAccessObject gameDataAccess = new FileGameDataAccessObject();
+
+        // Create or load game data
+        AdventureGame game = gameDataAccess.getGame();
+        if (game == null) {
+            // Create a new game with test data
+            User testUser = new User();
+            Monster testMonster = new Monster();
+
+            // Create a location with the monster
+            Location testLocation = new Location("Test Battle Location", 0.0, 0.0, testMonster);
+            List<Location> locations = new ArrayList<>();
+            locations.add(testLocation);
+
+            GameMap gameMap = new GameMap(locations, 0);
+            List<Location> pathHistory = new LinkedList<>();
+            pathHistory.add(testLocation);
+
+            game = new AdventureGame(testUser, gameMap, pathHistory);
+            gameDataAccess.saveGame(game);
+        }
+
         InMemoryBattleDataAccess battleDataAccess = new InMemoryBattleDataAccess();
+        battleDataAccess.setGameDataAccess(gameDataAccess);
 
         // Initialize Presenter
         Battle_Presenter battlePresenter = new Battle_Presenter(battleViewModel, viewManagerModel);
@@ -87,9 +114,16 @@ public class BattleSystemTestApp {
             }
         });
 
-        // Initialize battle with test data
-        User testUser = new User();
-        Monster testMonster = new Monster();
+        // Initialize battle with test data from the game
+        User testUser = game.getUser();
+        Monster testMonster = game.getGameMap().getCurrentLocation().getMonster();
+
+        // If no monster at current location, create one for testing
+        if (testMonster == null) {
+            testMonster = new Monster();
+            game.getGameMap().getCurrentLocation().setMonster(testMonster);
+            gameDataAccess.saveGame(game);
+        }
 
         Battle_State battleState = battleViewModel.getState();
         battleState.setUser(testUser);

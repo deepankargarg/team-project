@@ -41,6 +41,26 @@ public class MovePresenter implements MoveOutputBoundary {
         moveViewModel.firePropertyChange();
     }
 
+<<<<<<< Updated upstream
+=======
+    @Override
+    public void switchToBattleView(User user, Monster monster) {
+        Battle_State battleState = battleViewModel.getState();
+
+        // Reset battle state for new battle
+        battleState.setUser(user);
+        battleState.setMonster(monster);
+        battleState.setBattleEnded(false);
+        battleState.setUserWon(false);
+        battleState.setBattleMessage("Battle is starting...");
+
+        battleViewModel.firePropertyChange();
+
+        viewManagerModel.setState(battleViewModel.getViewName());
+        viewManagerModel.firePropertyChange();
+    }
+
+>>>>>>> Stashed changes
     private String formatLinearMap(int currentIndex, int mapSize) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < mapSize; i++) {

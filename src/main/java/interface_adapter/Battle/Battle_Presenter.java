@@ -1,6 +1,11 @@
 package interface_adapter.Battle;
 
 import interface_adapter.ViewManagerModel;
+<<<<<<< Updated upstream
+=======
+import interface_adapter.move.MoveState;
+import interface_adapter.move.MoveViewModel;
+>>>>>>> Stashed changes
 import use_case.Battle.Battle_OutputBoundary;
 import use_case.Battle.Battle_OutputData;
 
@@ -13,11 +18,23 @@ public class Battle_Presenter implements Battle_OutputBoundary {
     // TODO: Haven't handle the view manager, this should be used for switching from Battle View into the Moving on
     //  the map. I think we also need to use the view model from the map system once we are finished.
     private final ViewManagerModel viewManagerModel;
+<<<<<<< Updated upstream
     // private final Moving_ViewModel moving_ViewModel;
+=======
+    private final MoveViewModel moveViewModel;
+>>>>>>> Stashed changes
 
+    public Battle_Presenter(Battle_ViewModel battleViewModel, ViewManagerModel viewManagerModel, MoveViewModel moveViewModel) {
+        this.battleViewModel = battleViewModel;
+        this.viewManagerModel = viewManagerModel;
+        this.moveViewModel = moveViewModel;
+    }
+
+    // Backward compatibility constructor for existing code
     public Battle_Presenter(Battle_ViewModel battleViewModel, ViewManagerModel viewManagerModel) {
         this.battleViewModel = battleViewModel;
         this.viewManagerModel = viewManagerModel;
+        this.moveViewModel = null;
     }
 
     /**
@@ -83,6 +100,13 @@ public class Battle_Presenter implements Battle_OutputBoundary {
 
         // Notify the view that state has changed
         battleViewModel.firePropertyChange();
+
+        // Update move view to show the monster is gone
+        if (moveViewModel != null) {
+            MoveState moveState = moveViewModel.getState();
+            moveState.setMonster(null);
+            moveViewModel.firePropertyChange();
+        }
 
         // switch to a different view after a delay
         viewManagerModel.setState("Moving");

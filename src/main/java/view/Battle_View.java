@@ -241,14 +241,7 @@ public class Battle_View extends JPanel implements ActionListener, PropertyChang
         // Handle battle end
         if (state.isBattleEnded()) {
             attackButton.setEnabled(false);
-            // Show result dialog
-            String title = state.isUserWon() ? "Victory!" : "Defeat!";
-            int messageType = state.isUserWon() ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.WARNING_MESSAGE;
-
-            JOptionPane.showMessageDialog(this,
-                    state.getBattleMessage(),
-                    title,
-                    messageType);
+            // Battle message already shows the result, view will switch automatically
         } else {
             // Battle continues - re-enable buttons
             attackButton.setEnabled(true);
