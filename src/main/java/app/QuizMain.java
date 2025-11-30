@@ -4,10 +4,7 @@ import data_access.InMemoryQuizDataAccessObject;
 import data_access.QuizzesReader;
 import interface_adapter.Battle.Battle_ViewModel;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.quiz.QuizController;
-import interface_adapter.quiz.QuizPresenter;
-import interface_adapter.quiz.LoadQuizPresenter;
-import interface_adapter.quiz.Quiz_ViewModel;
+import interface_adapter.quiz.*;
 import use_case.loadQuiz.LoadQuizInputBoundary;
 import use_case.loadQuiz.LoadQuizInteractor;
 import use_case.loadQuiz.LoadQuizOutputBoundary;
@@ -15,6 +12,7 @@ import use_case.quiz.SubmitQuizInputBoundary;
 import use_case.quiz.SubmitQuizInteractor;
 import use_case.quiz.SubmitQuizOutputBoundary;
 import view.QuizView;
+import interface_adapter.quiz.Quiz_State;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,7 +28,9 @@ public class QuizMain {
             // Create ViewModels
             Quiz_ViewModel quizViewModel = new Quiz_ViewModel();
             Battle_ViewModel battleViewModel = new Battle_ViewModel();
-            ViewManagerModel viewManagerModel = new ViewManagerModel(quizViewModel.getViewName());
+            ViewManagerModel viewManagerModel = new ViewManagerModel();
+
+            viewManagerModel.setState(quizViewModel.getViewName());
 
             // Create Presenters
             LoadQuizOutputBoundary loadQuizPresenter = new LoadQuizPresenter(quizViewModel);
@@ -75,9 +75,12 @@ public class QuizMain {
                 }
             });
 
+            Quiz_State quizState = new Quiz_State();
+            int quizId = quizState.setQuizId();
+
             // Show main frame and load first quiz
             mainFrame.setVisible(true);
-            quizView.loadQuiz(1); // Start with quiz ID 1
+            quizView.loadQuiz(quizId);
         });
     }
 }

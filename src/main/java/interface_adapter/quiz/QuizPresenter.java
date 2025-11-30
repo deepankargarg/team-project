@@ -20,7 +20,7 @@ public class QuizPresenter implements SubmitQuizOutputBoundary {
     @Override
     public void present(SubmitQuizOutputData data) {
         Quiz_State quizState = viewModel.getState();
-        quizState.setQuizId(data.getQuizId());
+        quizState.setQuizId();
         quizState.setCompleted(data.isCompleted());
         quizState.setStatus(data.getStatus());
         quizState.setFeedbackMessage(data.getMessage());
