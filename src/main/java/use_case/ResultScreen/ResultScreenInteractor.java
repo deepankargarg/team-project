@@ -1,43 +1,26 @@
 package use_case.ResultScreen;
 
-import entity.AdventureGame;
-import entity.Location;
-import use_case.show_results.ShowResultsGameDataAccessInterface;
-import use_case.show_results.ShowResultsInputData;
-import use_case.show_results.ShowResultsOutputBoundary;
-import use_case.show_results.ShowResultsOutputData;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
 public class ResultScreenInteractor implements ResultScreenInputBoundary {
 
-    private final ShowResultsGameDataAccessInterface gameDataAccess;
     private final ResultScreenOutputBoundary presenter;
 
-    public ShowResultsInteractor(ShowResultsGameDataAccessInterface gameDataAccess,
-                                 ShowResultsOutputBoundary presenter) {
-        this.gameDataAccess = gameDataAccess;
+    public ResultScreenInteractor(ResultScreenOutputBoundary presenter) {
         this.presenter = presenter;
     }
 
     @Override
-    public void execute(ShowResultsInputData showResultsInputData) {
-        final AdventureGame game = gameDataAccess.get();
+    public void execute(ResultScreenInputData inputData) {
 
-        final String userName = "Adventurer";
-        final List<String> pathHistory = game.getPathHistory().stream()
-                .map(Location::getName)
-                .collect(Collectors.toList());
-        final int totalMoves = pathHistory.size();
-        final String finalLocation = game.getGameMap().getCurrentLocation().getName();
+        if (!inputData.isGameCompleted()) {
+            presenter.prepareSuccessView(
+                    new ResultScreenOutputData("Error: Game is not completed")
+            );
+            return;
+        }
 
-        final ShowResultsOutputData outputData = new ShowResultsOutputData(
-                userName, totalMoves, pathHistory, finalLocation
-        );
+        ResultScreenOutputData output =
+                new ResultScreenOutputData("Game Completed!");
 
-        // Clear game data to force a new game
-        gameDataAccess.clearGameData();
-
-        presenter.prepareSuccessView(outputData);
+        presenter.prepareSuccessView(output);
+    }
 }
