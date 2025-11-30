@@ -21,6 +21,7 @@ import java.beans.PropertyChangeListener;
 public class Battle_View extends JPanel implements ActionListener, PropertyChangeListener {
     private final String viewName = "Battle";
     private final Battle_ViewModel viewModel;
+    private final ViewManagerModel viewManagerModel;
     private Battle_Controller battleController;
     private InventoryUseItem_Controller inventoryController;
 
@@ -36,8 +37,10 @@ public class Battle_View extends JPanel implements ActionListener, PropertyChang
     private final JTextArea inventoryDetailsArea = new JTextArea(5,20);
 
 
-    public Battle_View(Battle_ViewModel battleViewModel) {
+    public Battle_View(Battle_ViewModel battleViewModel, ViewManagerModel viewManagerModel, Quiz_ViewModel quizViewModel) {
         this.viewModel = battleViewModel;
+        this.viewManagerModel = viewManagerModel;
+        this.quizViewModel = quizViewModel;
         this.viewModel.addPropertyChangeListener(this);
 
         // Initialize UI components
@@ -237,14 +240,7 @@ public class Battle_View extends JPanel implements ActionListener, PropertyChang
         // Handle battle end
         if (state.isBattleEnded()) {
             attackButton.setEnabled(false);
-            // Show result dialog
-            String title = state.isUserWon() ? "Victory!" : "Defeat!";
-            int messageType = state.isUserWon() ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.WARNING_MESSAGE;
-
-            JOptionPane.showMessageDialog(this,
-                    state.getBattleMessage(),
-                    title,
-                    messageType);
+            // Battle message already shows the result, view will switch automatically
         } else {
             // Battle continues - re-enable buttons
             attackButton.setEnabled(true);
