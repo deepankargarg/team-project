@@ -1,17 +1,17 @@
 package interface_adapter.quiz;
 
-import interface_adapter.Battle.Battle_ViewModel;
+import interface_adapter.Battle.BattleViewModel;
 import interface_adapter.ViewManagerModel;
 import use_case.quiz.SubmitQuizOutputBoundary;
 import use_case.quiz.SubmitQuizOutputData;
 
 public class QuizPresenter implements SubmitQuizOutputBoundary {
 
-    private final Quiz_ViewModel viewModel;
-    private final Battle_ViewModel battleViewModel;
+    private final QuizViewModel viewModel;
+    private final BattleViewModel battleViewModel;
     private final ViewManagerModel viewManagerModel;
 
-    public QuizPresenter(Quiz_ViewModel viewModel, Battle_ViewModel battleViewModel, ViewManagerModel viewManagerModel) {
+    public QuizPresenter(QuizViewModel viewModel, BattleViewModel battleViewModel, ViewManagerModel viewManagerModel) {
         this.viewModel = viewModel;
         this.battleViewModel = battleViewModel;
         this.viewManagerModel = viewManagerModel;
@@ -19,7 +19,7 @@ public class QuizPresenter implements SubmitQuizOutputBoundary {
 
     @Override
     public void present(SubmitQuizOutputData data) {
-        Quiz_State quizState = viewModel.getState();
+        QuizState quizState = viewModel.getState();
         quizState.setQuizId(data.getQuizId());
         quizState.setCompleted(data.isCompleted());
         quizState.setStatus(data.getStatus());
