@@ -15,10 +15,7 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.move.MoveController;
 import interface_adapter.move.MovePresenter;
 import interface_adapter.move.MoveViewModel;
-import interface_adapter.quiz.LoadQuizPresenter;
-import interface_adapter.quiz.QuizController;
-import interface_adapter.quiz.QuizPresenter;
-import interface_adapter.quiz.QuizViewModel;
+import interface_adapter.quiz.*;
 import interface_adapter.results.ResultsViewModel;
 import interface_adapter.results.ShowResultsController;
 import interface_adapter.results.ShowResultsPresenter;
@@ -89,7 +86,8 @@ public class MoveTestApp {
         QuizView quizView = new QuizView(quizViewModel);
         quizView.setQuizController(quizController);
         new QuizzesReader().loadQuizzes(repo);
-        quizView.loadQuiz(1);
+        QuizState quizState = new QuizState();
+        quizView.loadQuiz(quizState.setQuizId());
 
         MoveViewModel moveViewModel = new MoveViewModel();
         ResultsViewModel resultsViewModel = new ResultsViewModel();
