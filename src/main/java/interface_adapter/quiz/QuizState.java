@@ -11,7 +11,7 @@ import java.util.Set;
 /**
  * State object for the Quiz View.
  */
-public class Quiz_State {
+public class QuizState {
     private User user = null;
     private Monster monster = null;
     private boolean quizResult = false;
