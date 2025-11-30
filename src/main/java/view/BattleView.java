@@ -207,6 +207,17 @@ public class BattleView extends JPanel implements ActionListener, PropertyChange
     public void propertyChange(PropertyChangeEvent evt) {
         if ("state".equals(evt.getPropertyName())) {
             BattleState state = viewModel.getState();
+            if (state.isJustFinishedQuiz()) {
+                state.setJustFinishedQuiz(false);
+
+                User user = state.getUser();
+                Monster monster = state.getMonster();
+                boolean quizResult = state.isQuizResult();
+
+                if (battleController != null) {
+                    battleController.execute(user, monster, quizResult);
+                }
+            }
             updateDisplay(state);
         }
     }
@@ -236,6 +247,7 @@ public class BattleView extends JPanel implements ActionListener, PropertyChange
 
         // Handle battle end
         if (state.isBattleEnded()) {
+            state.setBattleEnded(false);
             attackButton.setEnabled(false);
             // Show result dialog
             String title = state.isUserWon() ? "Victory!" : "Defeat!";

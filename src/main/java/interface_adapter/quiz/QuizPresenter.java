@@ -1,5 +1,6 @@
 package interface_adapter.quiz;
 
+import interface_adapter.Battle.BattleState;
 import interface_adapter.Battle.BattleViewModel;
 import interface_adapter.ViewManagerModel;
 import use_case.quiz.SubmitQuizOutputBoundary;
@@ -31,7 +32,18 @@ public class QuizPresenter implements SubmitQuizOutputBoundary {
 
     @Override
     public void switchToBattleView() {
+        QuizState quizState = viewModel.getState();
+        boolean isCorrect = "CORRECT".equals(quizState.getStatus());
+
+        BattleState battleState = battleViewModel.getState();
+        battleState.setQuizResult(isCorrect);
+        battleState.setJustFinishedQuiz(true);
+
+        // HACK: switch to battle view first then update battle's attributes
         viewManagerModel.setState(battleViewModel.getViewName());
         viewManagerModel.firePropertyChange();
+
+        battleViewModel.setState(battleState);
+        battleViewModel.firePropertyChange();
     }
 }

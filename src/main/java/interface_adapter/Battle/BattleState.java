@@ -16,6 +16,9 @@ public class BattleState {
     private boolean battleEnded = false;
     private boolean userWon = false;
 
+    private boolean quizResult = false;
+    private boolean justFinishedQuiz = false;
+
     // Monster getters and setters
     public Monster getMonster() {
         return monster;
@@ -85,5 +88,22 @@ public class BattleState {
 
     public String getMonsterName() {
         return monster != null ? monster.NAME : "Monster";
+    }
+
+
+    public boolean isQuizResult() {
+        return quizResult;
+    }
+
+    public void setQuizResult(boolean quizResult) {
+        this.quizResult = quizResult;
+    }
+
+    public boolean isJustFinishedQuiz() {
+        return justFinishedQuiz;
+    }
+
+    public void setJustFinishedQuiz(boolean justFinishedQuiz) {
+        this.justFinishedQuiz = justFinishedQuiz;
     }
 }
