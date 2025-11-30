@@ -2,9 +2,7 @@ package app;
 
 import API.GeoapifyStaticMap;
 import API.MoveStaticMapInterface;
-import data_access.FileGameDataAccessObject;
-import data_access.InMemoryBattleDataAccess;
-import data_access.OpenGameFileDataAccess;
+import data_access.*;
 import entity.*;
 import interface_adapter.Battle.Battle_Controller;
 import interface_adapter.Battle.Battle_Presenter;
@@ -18,15 +16,24 @@ import interface_adapter.opengame.OpenGameController;
 import interface_adapter.opengame.OpenGamePresenter;
 import interface_adapter.opengame.OpenGameScreenSwitcher;
 import interface_adapter.opengame.OpenGameViewModel;
+import interface_adapter.quiz.LoadQuizPresenter;
+import interface_adapter.quiz.QuizController;
+import interface_adapter.quiz.QuizPresenter;
 import interface_adapter.quiz.Quiz_ViewModel;
 import interface_adapter.results.ResultsViewModel;
 import interface_adapter.results.ShowResultsController;
 import interface_adapter.results.ShowResultsPresenter;
 import use_case.Battle.Battle_Interactor;
+import use_case.loadQuiz.LoadQuizInputBoundary;
+import use_case.loadQuiz.LoadQuizInteractor;
+import use_case.loadQuiz.LoadQuizOutputBoundary;
 import use_case.move.MoveInputBoundary;
 import use_case.move.MoveInteractor;
 import use_case.move.MoveOutputData;
 import use_case.openGame.*;
+import use_case.quiz.SubmitQuizInputBoundary;
+import use_case.quiz.SubmitQuizInteractor;
+import use_case.quiz.SubmitQuizOutputBoundary;
 import use_case.show_results.ShowResultsInputBoundary;
 import use_case.show_results.ShowResultsInteractor;
 import view.*;
@@ -82,8 +89,22 @@ public class MoveTestApp {
         Battle_View battleView = new Battle_View(battleViewModel);
         battleView.setBattleController(battleController);
 
-        Quiz_View quizView = new Quiz_View(quizViewModel, viewManagerModel);
-        quizView.setBattleController(battleController);
+        InMemoryQuizDataAccessObject repo = new InMemoryQuizDataAccessObject();
+        new QuizzesReader().loadQuizzes(repo);
+
+        // Create Presenters
+        LoadQuizOutputBoundary loadQuizPresenter = new LoadQuizPresenter(quizViewModel);
+        SubmitQuizOutputBoundary submitQuizPresenter = new QuizPresenter(quizViewModel, battleViewModel, viewManagerModel);
+
+        // Create Interactors (Use Cases)
+        LoadQuizInputBoundary loadQuizInteractor = new LoadQuizInteractor(repo, loadQuizPresenter);
+        SubmitQuizInputBoundary submitQuizInteractor = new SubmitQuizInteractor(repo, submitQuizPresenter);
+
+        // Create Controller (inject BOTH interactors)
+        QuizController controller = new QuizController(submitQuizInteractor, loadQuizInteractor);
+
+        QuizView quizView = new QuizView(controller, quizViewModel);
+        quizView.loadQuiz(1);
 
         MoveViewModel moveViewModel = new MoveViewModel();
         ResultsViewModel resultsViewModel = new ResultsViewModel();

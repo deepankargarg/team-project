@@ -7,7 +7,6 @@ import interface_adapter.Battle.Battle_ViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.move.MoveViewModel;
 import interface_adapter.opengame.OpenGameViewModel;
-import interface_adapter.quiz.QuizViewModel;
 import interface_adapter.results.ResultsViewModel;
 import use_case.Battle.Battle_InputBoundary;
 import use_case.Battle.Battle_Interactor;
@@ -40,7 +39,7 @@ public class AppBuilder {
     private OpenGameView openGameView;
     private OpenGameViewModel openGameViewModel;
     private QuizView quizView;
-    private QuizViewModel quizViewModel;
+
     private ResultsView resultsView;
     private ResultsViewModel resultsViewModel;
     private ResultScreenView resultScreenView;
@@ -71,7 +70,7 @@ public class AppBuilder {
     }
 
     public AppBuilder addQuizView() {
-        quizViewModel = new QuizViewModel();
+        // quizViewModel = new QuizViewModel();
         // quizView = new QuizView(quizViewModel);
         // cardPanel.add(quizView, quizView.getViewName());
         return this;

@@ -93,7 +93,7 @@ public class ResultScreenView extends JPanel {
         /* ---------------- LISTENERS ---------------- */
 
         // When ResultViewModel changes → update message
-        viewModel.addListener(() -> messageLabel.setText(viewModel.getMessage()));
+        //viewModel.addListener(() -> messageLabel.setText(viewModel.getMessage()));
 
         // START NEW GAME — call controller or OpenGame logic
         newGameButton.addActionListener(e -> {
