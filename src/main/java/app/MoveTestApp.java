@@ -1,42 +1,45 @@
+
 package app;
 
 import API.GeoapifyStaticMap;
 import API.MoveStaticMapInterface;
-import data_access.*;
+import data_access.FileGameDataAccessObject;
+import data_access.InMemoryBattleDataAccess;
+import data_access.InMemoryQuizDataAccessObject;
+import data_access.QuizzesReader;
 import entity.*;
-import interface_adapter.Battle.Battle_Controller;
-import interface_adapter.Battle.Battle_Presenter;
+import interface_adapter.Battle.BattleController;
+import interface_adapter.Battle.BattlePresenter;
+import interface_adapter.Battle.BattleState;
+import interface_adapter.Battle.BattleViewModel;
 import interface_adapter.Battle.Battle_State;
-import interface_adapter.Battle.Battle_ViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.move.MoveController;
 import interface_adapter.move.MovePresenter;
 import interface_adapter.move.MoveViewModel;
-import interface_adapter.opengame.OpenGameController;
-import interface_adapter.opengame.OpenGamePresenter;
-import interface_adapter.opengame.OpenGameScreenSwitcher;
-import interface_adapter.opengame.OpenGameViewModel;
 import interface_adapter.quiz.LoadQuizPresenter;
 import interface_adapter.quiz.QuizController;
 import interface_adapter.quiz.QuizPresenter;
-import interface_adapter.quiz.Quiz_ViewModel;
+import interface_adapter.quiz.QuizViewModel;
 import interface_adapter.results.ResultsViewModel;
 import interface_adapter.results.ShowResultsController;
 import interface_adapter.results.ShowResultsPresenter;
-import use_case.Battle.Battle_Interactor;
+import use_case.Battle.BattleInteractor;
 import use_case.loadQuiz.LoadQuizInputBoundary;
 import use_case.loadQuiz.LoadQuizInteractor;
 import use_case.loadQuiz.LoadQuizOutputBoundary;
 import use_case.move.MoveInputBoundary;
 import use_case.move.MoveInteractor;
 import use_case.move.MoveOutputData;
-import use_case.openGame.*;
 import use_case.quiz.SubmitQuizInputBoundary;
 import use_case.quiz.SubmitQuizInteractor;
 import use_case.quiz.SubmitQuizOutputBoundary;
 import use_case.show_results.ShowResultsInputBoundary;
 import use_case.show_results.ShowResultsInteractor;
-import view.*;
+import view.Battle_View;
+import view.MoveView;
+import view.QuizView;
+import view.ResultsView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -57,40 +60,22 @@ public class MoveTestApp {
 
         CardLayout cardLayout = new CardLayout();
         JPanel views = new JPanel(cardLayout);
-        //TODO: Add the view over here
 
         ViewManagerModel viewManagerModel = new ViewManagerModel();
 
-        Battle_ViewModel battleViewModel = new Battle_ViewModel();
-        Quiz_ViewModel quizViewModel = new Quiz_ViewModel();
-        ScreenSwitchBoundary openGameScreenSwitcher =
-                new OpenGameScreenSwitcher(viewManagerModel);
-
-        OpenGameViewModel openGameViewModel = new OpenGameViewModel();
-        OpenGameOutputBoundary openGamePresenter = new OpenGamePresenter(openGameViewModel, viewManagerModel);
-
-        OpenGameDataAccessInterface openGameDAO = new OpenGameFileDataAccess("game_save.json");
-
-        OpenGameInputBoundary openGameInteractor =
-                new OpenGameInteractor(openGamePresenter, openGameDAO, openGameScreenSwitcher);
-
-        OpenGameController openGameController = new OpenGameController(openGameInteractor);
-
-        OpenGameView openGameView = new OpenGameView(openGameController, openGameViewModel);
-
+        BattleViewModel battleViewModel = new BattleViewModel();
+        QuizViewModel quizViewModel = new QuizViewModel();
         InMemoryBattleDataAccess battleDataAccess = new InMemoryBattleDataAccess();
-
-        Battle_Presenter battlePresenter = new Battle_Presenter(battleViewModel, viewManagerModel);
-
-        Battle_Interactor battleInteractor = new Battle_Interactor(battleDataAccess, battlePresenter);
-
-        Battle_Controller battleController = new Battle_Controller(battleInteractor, quizViewModel);
-
-        Battle_View battleView = new Battle_View(battleViewModel);
-        battleView.setBattleController(battleController);
-
         InMemoryQuizDataAccessObject repo = new InMemoryQuizDataAccessObject();
-        new QuizzesReader().loadQuizzes(repo);
+
+        BattlePresenter battlePresenter = new BattlePresenter(battleViewModel, viewManagerModel);
+
+        BattleInteractor battleInteractor = new BattleInteractor(battleDataAccess, battlePresenter);
+
+        BattleController battleController = new BattleController(battleInteractor, quizViewModel);
+
+        BattleView battleView = new BattleView(battleViewModel);
+        battleView.setBattleController(battleController);
 
         // Create Presenters
         LoadQuizOutputBoundary loadQuizPresenter = new LoadQuizPresenter(quizViewModel);
@@ -101,9 +86,11 @@ public class MoveTestApp {
         SubmitQuizInputBoundary submitQuizInteractor = new SubmitQuizInteractor(repo, submitQuizPresenter);
 
         // Create Controller (inject BOTH interactors)
-        QuizController controller = new QuizController(submitQuizInteractor, loadQuizInteractor);
+        QuizController quizController = new QuizController(submitQuizInteractor, loadQuizInteractor);
 
-        QuizView quizView = new QuizView(controller, quizViewModel);
+        QuizView quizView = new QuizView(quizViewModel);
+        quizView.setQuizController(quizController);
+        new QuizzesReader().loadQuizzes(repo);
         quizView.loadQuiz(1);
 
         MoveViewModel moveViewModel = new MoveViewModel();
@@ -131,8 +118,6 @@ public class MoveTestApp {
         views.add(resultsView, resultsView.getViewName());
         views.add(battleView, "Battle");
         views.add(quizView, "Quiz");
-        views.add(openGameView, "OpenGame");
-
 
 
         viewManagerModel.addPropertyChangeListener(new PropertyChangeListener() {
@@ -197,11 +182,7 @@ public class MoveTestApp {
 
 
         application.add(views);
-        viewManagerModel.setState("OpenGame");
-        viewManagerModel.firePropertyChange();
-
         application.setLocationRelativeTo(null);
-
         application.setVisible(true);
     }
 }

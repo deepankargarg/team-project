@@ -7,7 +7,7 @@
         "alive": true,
         "DEF": 0,
         "bonusHP": 0,
-        "HP": 25,
+        "HP": 29,
         "inventory": {
             "items": [],
             "empty": true
